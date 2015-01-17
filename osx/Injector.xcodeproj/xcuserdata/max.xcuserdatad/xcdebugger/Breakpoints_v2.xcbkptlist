@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../common/Injector/goatnative/Injector.h"
+            timestampString = "443221645.518052"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
+            landmarkName = "registerSingletonInterface()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../common/Injector/goatnative/Injector.h"
+            timestampString = "443221773.805572"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
+            landmarkName = "getInstance()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "std::__1::shared_ptr&lt;INotifier&gt; goatnative::Injector::getInstance&lt;INotifier&gt;()"
+                  moduleName = "Injector"
+                  urlString = "file:///Users/max/proj/goatnative/injector/Injector/common/Injector/goatnative/Injector.h"
+                  timestampString = "443221790.274219"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "105"
+                  endingLineNumber = "105"
+                  offsetFromSymbolStart = "726">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "std::__1::shared_ptr&lt;Notifier&gt; goatnative::Injector::getInstance&lt;Notifier&gt;()"
+                  moduleName = "Injector"
+                  urlString = "file:///Users/max/proj/goatnative/injector/Injector/common/Injector/goatnative/Injector.h"
+                  timestampString = "443221790.274421"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "105"
+                  endingLineNumber = "105"
+                  offsetFromSymbolStart = "726">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../common/Injector/goatnative/Injector.h"
+            timestampString = "443223143.280687"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
+            landmarkName = "class Injector"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "std::__1::shared_ptr&lt;INotifier&gt; goatnative::Injector::getInstance&lt;INotifier&gt;()"
+                  moduleName = "Injector"
+                  urlString = "file:///Users/max/proj/goatnative/injector/Injector/common/Injector/goatnative/Injector.h"
+                  timestampString = "443223143.284209"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "99"
+                  endingLineNumber = "99"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "std::__1::shared_ptr&lt;ServicesProvider&gt; goatnative::Injector::getInstance&lt;ServicesProvider&gt;()"
+                  moduleName = "Injector"
+                  urlString = "file:///Users/max/proj/goatnative/injector/Injector/common/Injector/goatnative/Injector.h"
+                  timestampString = "443223143.284352"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "99"
+                  endingLineNumber = "99"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "std::__1::shared_ptr&lt;IConcurrency&gt; goatnative::Injector::getInstance&lt;IConcurrency&gt;()"
+                  moduleName = "Injector"
+                  urlString = "file:///Users/max/proj/goatnative/injector/Injector/common/Injector/goatnative/Injector.h"
+                  timestampString = "443223143.284458"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "99"
+                  endingLineNumber = "99"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "std::__1::shared_ptr&lt;IFileSystem&gt; goatnative::Injector::getInstance&lt;IFileSystem&gt;()"
+                  moduleName = "Injector"
+                  urlString = "file:///Users/max/proj/goatnative/injector/Injector/common/Injector/goatnative/Injector.h"
+                  timestampString = "443223143.284568"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "99"
+                  endingLineNumber = "99"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "std::__1::shared_ptr&lt;FileSystem&gt; goatnative::Injector::getInstance&lt;FileSystem&gt;()"
+                  moduleName = "Injector"
+                  urlString = "file:///Users/max/proj/goatnative/injector/Injector/common/Injector/goatnative/Injector.h"
+                  timestampString = "443223143.28467"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "99"
+                  endingLineNumber = "99"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "std::__1::shared_ptr&lt;Concurrency&gt; goatnative::Injector::getInstance&lt;Concurrency&gt;()"
+                  moduleName = "Injector"
+                  urlString = "file:///Users/max/proj/goatnative/injector/Injector/common/Injector/goatnative/Injector.h"
+                  timestampString = "443223143.284769"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "99"
+                  endingLineNumber = "99"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "std::__1::shared_ptr&lt;Notifier&gt; goatnative::Injector::getInstance&lt;Notifier&gt;()"
+                  moduleName = "Injector"
+                  urlString = "file:///Users/max/proj/goatnative/injector/Injector/common/Injector/goatnative/Injector.h"
+                  timestampString = "443223143.284866"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "99"
+                  endingLineNumber = "99"
+                  offsetFromSymbolStart = "28">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

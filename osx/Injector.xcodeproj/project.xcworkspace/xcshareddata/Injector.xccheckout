@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>6740BFF3-D636-45E1-80BF-B7D1AC6B8171</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Injector</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>781D6DCF55A0213C9EFB7DB5454D0F4D4242F036</key>
+		<string>https://github.com/GoatHunter/goatnative-inject</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>osx/Injector.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>781D6DCF55A0213C9EFB7DB5454D0F4D4242F036</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/GoatHunter/goatnative-inject</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>781D6DCF55A0213C9EFB7DB5454D0F4D4242F036</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>781D6DCF55A0213C9EFB7DB5454D0F4D4242F036</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Injector</string>
+		</dict>
+	</array>
+</dict>
+</plist>
