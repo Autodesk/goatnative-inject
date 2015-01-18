@@ -28,6 +28,8 @@ auto notifier = injector.getInstance&lt;INotifier&gt;();
 
 // Use notifier
 
+* See more examples in main.cpp
+
 ## TODO
 * Currently, the registerSingletonInterface() method maps interfaces to instances, need to add a method for 
   factory interface registration which after invoking it will cause each call to getInstance<IInteface>() to return a new instance.
