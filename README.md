@@ -24,7 +24,7 @@ Injector injector;
 injector.registerSingleton<Notifier, InputData>(); // Notifier depends on InputData
 injector.registerSingletonInterface<INotifier, Notifier>();
 
-auto notifier = injector.getInstance<INotifier>();
+auto notifier = injector.getInstance&lt;INotifier&gt;();
 
 // Use notifier
 
