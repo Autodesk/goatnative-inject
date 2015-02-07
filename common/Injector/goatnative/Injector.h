@@ -13,6 +13,7 @@
 #include <memory>
 #include <functional>
 #include <cassert>
+#include <mutex>
 
 namespace goatnative
 {
@@ -22,6 +23,8 @@ namespace goatnative
     using std::pair;
     using std::unordered_map;
     using std::size_t;
+	using std::recursive_mutex;
+	using std::lock_guard;
 
     //
     // Injector
@@ -33,29 +36,15 @@ namespace goatnative
     //
     // Optimized out usage of RTTI to get type info - see comments near type_id below.
     //
-    // Usage example:
-    // ==============
-    // Injector injector;
-    //
-    // injector.registerSingleton<Child2>();
-    // auto inst3 = make_shared<Child3>();
-    // injector.registerInstance<Child3>(inst3);
-    // injector.registerClass<Child1>();
-    //
-    // injector.registerClass<Parent, Child1, Child2, Child3>();
-    //
-    // auto parent = injector<Parent>.getInstance();
-    //
-    // TODO - (1) add method for factory interface registration i.e each call to
-    //            getInstance<IInteface>() will return a new instance.
-    //        (2) thread safety.
-    //
+    // See usage examples @ https://github.com/GoatHunter/goatnative-inject
     class Injector
     {
     public:
         template <typename T, typename... Dependencies>
         Injector& registerClass()
         {
+			lock_guard<recursive_mutex> lockGuard{ _mutex };
+
             auto creator = [this]() -> T*
             {
                 return new T(getInstance<Dependencies>()...);
@@ -69,6 +58,8 @@ namespace goatnative
         template <typename T>
         Injector& registerInstance(shared_ptr<T> instance)
         {
+			lock_guard<recursive_mutex> lockGuard{ _mutex };
+
             shared_ptr<IHolder> holder = shared_ptr<Holder<T>>{new Holder<T>{instance}};
             
             _typesToInstances.insert(pair<size_t, shared_ptr<IHolder>>{type_id<T>(), holder});
@@ -79,26 +70,38 @@ namespace goatnative
         template <typename T, typename... Dependencies>
         Injector& registerSingleton()
         {
+			lock_guard<recursive_mutex> lockGuard{ _mutex };
+
             auto instance = make_shared<T>(getInstance<Dependencies>()...);
             
             return registerInstance<T>(instance);
         }
         
-        template <typename Interface, typename RegisteredConcreteClass>
-        Injector& registerSingletonInterface()
-        {
-            auto instance = getInstance<RegisteredConcreteClass>();
-            
-            shared_ptr<IHolder> holder =
-                shared_ptr<Holder<Interface>>{new Holder<Interface>{instance}};
-            
-            _typesToInstances.insert(pair<size_t, shared_ptr<IHolder>>{type_id<Interface>(), holder});
-            return *this;
-        }
+		template <typename Interface, typename RegisteredConcreteClass>
+		Injector& registerInterface()
+		{
+			lock_guard<recursive_mutex> lockGuard{ _mutex };
+
+			auto instanceGetter = [this]() -> shared_ptr<IHolder>
+			{
+				auto instance = getInstance<RegisteredConcreteClass>();
+				shared_ptr<IHolder> holder =
+					shared_ptr<Holder<Interface>>{new Holder<Interface>{ instance }};
+
+				return holder;
+			};
+
+			_interfacesToInstanceGetters.insert(pair<size_t, function<shared_ptr<IHolder>()>>{type_id<Interface>(), instanceGetter});
+
+			return *this;
+		}
+
         
         template <typename T>
         shared_ptr<T> getInstance()
         {
+			lock_guard<recursive_mutex> lockGuard{ _mutex };
+
             // Try getting registered singleton or instance.
             if (_typesToInstances.find(type_id<T>()) != _typesToInstances.end())
             {
@@ -113,7 +116,16 @@ namespace goatnative
                 auto& creator = _typesToCreators[type_id<T>()];
                 
                 return shared_ptr<T>{(T*)creator()};
-            }
+			}
+			else if (_interfacesToInstanceGetters.find(type_id<T>()) != _interfacesToInstanceGetters.end())
+			{
+				auto& instanceGetter = _interfacesToInstanceGetters[type_id<T>()];
+
+				auto& iholder = instanceGetter();
+
+				auto holder = dynamic_cast<Holder<T>*>(iholder.get());
+				return holder->_instance;
+			}
             
             // If you debug, in some debuggers (e.g Apple's lldb in Xcode) it will breakpoint in this assert
             // and by looking in the stack trace you'll be able to see which class you forgot to map.
@@ -152,6 +164,10 @@ namespace goatnative
         unordered_map<size_t, shared_ptr<IHolder>> _typesToInstances;
         // Holds creators used to instansiate a type
         unordered_map<size_t, function<void*()>> _typesToCreators;
+
+		unordered_map<size_t, function<shared_ptr<IHolder>()>> _interfacesToInstanceGetters;
+
+		recursive_mutex _mutex;
 
     };
 } // namespace goatnative

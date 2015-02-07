@@ -19,6 +19,19 @@ using std::string;
 
 using goatnative::Injector;
 
+class IFile
+{
+	virtual void open() = 0;
+};
+
+class Win32File : public IFile
+{
+	void open() override
+	{
+		cout << "opening!!!" << endl;
+	}
+};
+
 class IConcurrency
 {
 public:
@@ -102,23 +115,12 @@ private:
 
 ////////////////////////////////////////////
 
-template<typename T>
-struct type { static void id() { } };
-
-// Custom type info method that uses size_t and not string for type name -
-// map lookups should go faster than if we would have used RTTI's typeid<T>().name() which returns a string
-// as key.
-// Taken from http://codereview.stackexchange.com/questions/44936/unique-type-id-in-c
-template<typename T>
-size_t type_id() { return reinterpret_cast<size_t>(&type<T>::id); }
-
-
 void testSingleton()
 {
     Injector injector;
     
     injector.registerSingleton<Notifier>();
-    injector.registerSingletonInterface<INotifier, Notifier>();
+    injector.registerInterface<INotifier, Notifier>();
     auto notifier = injector.getInstance<INotifier>();
     auto notifier2 = injector.getInstance<INotifier>();
     
@@ -132,15 +134,15 @@ void testBuildWholeGraph()
     Injector injector;
     
     injector.registerSingleton<Notifier>();
-    injector.registerSingletonInterface<INotifier, Notifier>();
+	injector.registerInterface<INotifier, Notifier>();
     
-    injector.registerClass<Concurrency>();
-    injector.registerSingletonInterface<IConcurrency, Concurrency>();
+	injector.registerSingleton<Concurrency>();
+	injector.registerInterface<IConcurrency, Concurrency>();
     
-    injector.registerClass<FileSystem>();
-    injector.registerSingletonInterface<IFileSystem, FileSystem>();
+	injector.registerSingleton<FileSystem>();
+	injector.registerInterface<IFileSystem, FileSystem>();
     
-    injector.registerClass<ServicesProvider, IConcurrency, IFileSystem, INotifier>();
+	injector.registerSingleton<ServicesProvider, IConcurrency, IFileSystem, INotifier>();
     
     auto services = injector.getInstance<ServicesProvider>();
 
@@ -152,6 +154,22 @@ void testBuildWholeGraph()
     assert(services->concurrency().get() == injector.getInstance<IConcurrency>().get());
     assert(services->filesystem().get() == injector.getInstance<IFileSystem>().get());
 }
+
+
+void testInterfaceBasedFactory()
+{
+
+	Injector injector;
+
+	injector.registerClass<Notifier>();
+	injector.registerInterface<INotifier, Notifier>();
+
+	auto notifier1 = injector.getInstance<INotifier>();
+	auto notifier2 = injector.getInstance<INotifier>();
+
+	assert(notifier1.get() != notifier2.get());
+}
+
 
 void testFactory()
 {
@@ -166,6 +184,7 @@ int main(int argc, const char * argv[]) {
     testSingleton();
     testBuildWholeGraph();
     testFactory();
+	testInterfaceBasedFactory();
 
     return 0;
 }
