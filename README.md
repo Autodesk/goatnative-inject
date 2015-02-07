@@ -13,6 +13,7 @@ I've extended that implementation by:
 * Register types to their dependencies.
 * Register as singleton.
 * Register interfaces to to concrete types.
+* Thread safe.
 
 ## Limits
 * Currently injection is done only via constructor.
@@ -31,7 +32,4 @@ auto notifier = injector.getInstance&lt;INotifier&gt;();
 * See more examples in main.cpp
 
 ## TODO
-* Currently, the registerSingletonInterface() method maps interfaces to instances, need to add a method for 
-  factory interface registration which after invoking it will cause each call to getInstance<IInteface>() to return a new instance.
-* Make thread safe using stl's concurrency.
 * Move tests from main.cpp to Google Test.
