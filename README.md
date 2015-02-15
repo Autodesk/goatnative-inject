@@ -20,15 +20,21 @@ I've extended that implementation by:
 * Injectee constructors are expected to have shared_ptr to each injected types
 
 ## Examples
-Injector injector;
-// Assumption: Notifier has a ctor of Notifier(shared_ptr<InputData>)  
-injector.registerSingleton<Notifier, InputData>(); // Notifier depends on InputData
-injector.registerSingletonInterface<INotifier, Notifier>();
-
-auto notifier = injector.getInstance&lt;INotifier&gt;();
-
-// Use notifier
-
+  Injector injector;
+    
+  injector.registerSingleton<Notifier>();
+	injector.registerInterface<INotifier, Notifier>();
+    
+	injector.registerSingleton<Concurrency>();
+	injector.registerInterface<IConcurrency, Concurrency>();
+    
+	injector.registerSingleton<FileSystem>();
+	injector.registerInterface<IFileSystem, FileSystem>();
+    
+	injector.registerSingleton<ServicesProvider, IConcurrency, IFileSystem, INotifier>();
+    
+  auto services = injector.getInstance<ServicesProvider>();
+  
 * See more examples in main.cpp
 
 ## TODO
