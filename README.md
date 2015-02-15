@@ -20,9 +20,9 @@ I've extended that implementation by:
 * Injectee constructors are expected to have shared_ptr to each injected types
 
 ## Examples
-  Injector injector;
-    
-  injector.registerSingleton<Notifier>();
+	Injector injector;
+	
+	injector.registerSingleton<Notifier>();
 	injector.registerInterface<INotifier, Notifier>();
     
 	injector.registerSingleton<Concurrency>();
@@ -33,7 +33,7 @@ I've extended that implementation by:
     
 	injector.registerSingleton<ServicesProvider, IConcurrency, IFileSystem, INotifier>();
     
-  auto services = injector.getInstance<ServicesProvider>();
+	auto services = injector.getInstance<ServicesProvider>();
   
 * See more examples in main.cpp
 
