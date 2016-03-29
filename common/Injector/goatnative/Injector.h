@@ -14,6 +14,7 @@
 #include <functional>
 #include <cassert>
 #include <mutex>
+#include <typeinfo>
 
 namespace goatnative
 {
@@ -34,7 +35,6 @@ namespace goatnative
     // Idea and code based upon:
     // http://www.codeproject.com/Articles/567981/AnplusIOCplusContainerplususingplusVariadicplusTem
     //
-    // Optimized out usage of RTTI to get type info - see comments near type_id below.
     //
     // See usage examples @ https://github.com/GoatHunter/goatnative-inject
     class Injector
@@ -50,7 +50,7 @@ namespace goatnative
                 return new T(getInstance<Dependencies>()...);
             };
             
-            _typesToCreators.insert(pair<size_t, function<void*()>>{type_id<T>(), creator} );
+            _typesToCreators.insert(pair<size_t, function<void*()>>{typeid(T).hash_code(), creator} );
             
             return *this;
         }
@@ -62,7 +62,7 @@ namespace goatnative
             
             shared_ptr<IHolder> holder = shared_ptr<Holder<T>>{new Holder<T>{instance}};
             
-            _typesToInstances.insert(pair<size_t, shared_ptr<IHolder>>{type_id<T>(), holder});
+            _typesToInstances.insert(pair<size_t, shared_ptr<IHolder>>{typeid(T).hash_code(), holder});
             
             return *this;
         }
@@ -90,7 +90,7 @@ namespace goatnative
                 return holder;
             };
             
-            _interfacesToInstanceGetters.insert(pair<size_t, function<shared_ptr<IHolder>()>>{type_id<Interface>(), instanceGetter});
+            _interfacesToInstanceGetters.insert(pair<size_t, function<shared_ptr<IHolder>()>>{typeid(Interface).hash_code(), instanceGetter});
             
             return *this;
         }
@@ -102,23 +102,23 @@ namespace goatnative
             lock_guard<recursive_mutex> lockGuard{ _mutex };
             
             // Try getting registered singleton or instance.
-            if (_typesToInstances.find(type_id<T>()) != _typesToInstances.end())
+            if (_typesToInstances.find(typeid(T).hash_code()) != _typesToInstances.end())
             {
                 // get as reference to avoid refcount increment
-                auto& iholder =  _typesToInstances[type_id<T>()];
+                auto& iholder =  _typesToInstances[typeid(T).hash_code()];
                 
                 auto holder = dynamic_cast<Holder<T>*>(iholder.get());
                 return holder->_instance;
             } // Otherwise attempt getting the creator and act as factory.
-            else if (_typesToCreators.find(type_id<T>()) != _typesToCreators.end())
+            else if (_typesToCreators.find(typeid(T).hash_code()) != _typesToCreators.end())
             {
-                auto& creator = _typesToCreators[type_id<T>()];
+                auto& creator = _typesToCreators[typeid(T).hash_code()];
                 
                 return shared_ptr<T>{(T*)creator()};
             }
-            else if (_interfacesToInstanceGetters.find(type_id<T>()) != _interfacesToInstanceGetters.end())
+            else if (_interfacesToInstanceGetters.find(typeid(T).hash_code()) != _interfacesToInstanceGetters.end())
             {
-                auto& instanceGetter = _interfacesToInstanceGetters[type_id<T>()];
+                auto& instanceGetter = _interfacesToInstanceGetters[typeid(T).hash_code()];
                 
                 auto iholder = instanceGetter();
                 
@@ -148,16 +148,6 @@ namespace goatnative
             
             shared_ptr<T> _instance;
         };
-        
-        template<typename T>
-        struct type { static void id() { } };
-        
-        // Custom type info method that uses size_t and not string for type name -
-        // map lookups should go faster than if we would have used RTTI's typeid<T>().name() which returns a string
-        // as key.
-        // Taken from http://codereview.stackexchange.com/questions/44936/unique-type-id-in-c
-        template<typename T>
-        size_t type_id() { return reinterpret_cast<size_t>(&type<T>::id); }
         
         // Holds instances - keeps singletons and custom registered instances
         unordered_map<size_t, shared_ptr<IHolder>> _typesToInstances;
