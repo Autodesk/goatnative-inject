@@ -6,8 +6,6 @@ The implementation behind the goatnative::Inject is taken from www.codeproject.c
 I've extended that implementation by:
 
 * Adding a registerInterface method that lets you map interfaces to previously registered instance classes.
-* Avoided usage of RTTI to identify types, found an interesting approach in http://codereview.stackexchange.com/questions/44936/unique-type-id-in-c 
-  which lets you get the type efficiently into a size_t type (instead of typeid(T).string() which returns an std::string).
 
 ## Features
 * Register types to their dependencies.
